@@ -80,7 +80,7 @@ export default function SecuritySettings() {
           setIsLoading(false);
           toast.error(ctx.error.message);
         },
-      }
+      },
     );
   }
 
@@ -95,7 +95,7 @@ export default function SecuritySettings() {
           <div className="space-y-1">
             <h3 className="text-lg font-semibold">Password</h3>
             <p className="text-muted-foreground text-sm">
-              Last changed 3 months ago
+              Update your password to keep your account secure
             </p>
           </div>
           <AlertDialog open={open} onOpenChange={setOpen}>
