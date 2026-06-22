@@ -4,6 +4,7 @@ import {
   FileStack,
   History,
   LayoutDashboard,
+  UserRoundKey,
 } from "lucide-react";
 export const items = [
   {
@@ -30,5 +31,10 @@ export const items = [
     title: "Schedule",
     url: "/dashboard/schedule",
     icon: CalendarSync,
+  },
+  {
+    title: "BYOK",
+    url: "/dashboard/byok",
+    icon: UserRoundKey,
   },
 ];
