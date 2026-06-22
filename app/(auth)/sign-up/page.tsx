@@ -2,17 +2,21 @@ import Image from "next/image";
 import { SignUpForm } from "../_components/SignUpForm";
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
+import MagnetLines from "@/components/react-bits/MagnetLines";
 
 export default function SignUpPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="bg-muted relative hidden lg:block">
-        <Image
-          width={100}
-          height={100}
-          src="/placeholder.svg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+      <div className="bg-muted/95 relative hidden lg:block">
+        <MagnetLines
+          rows={10}
+          columns={12}
+          containerSize=" 100%"
+          lineColor="#efefef"
+          lineWidth="3px"
+          lineHeight="60px"
+          baseAngle={-10}
+          style={{ margin: "2rem auto" }}
         />
       </div>
       <div className="flex flex-col gap-4 p-6 md:p-10">

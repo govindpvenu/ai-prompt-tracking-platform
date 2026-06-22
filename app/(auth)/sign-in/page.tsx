@@ -2,20 +2,25 @@ import Image from "next/image";
 import { SignInForm } from "../_components/SignInForm";
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
+import MagnetLines from "@/components/react-bits/MagnetLines";
 
 export default function SignInPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="bg-muted relative hidden lg:block">
-        <Image
-          width={100}
-          height={100}
-          src="/placeholder.svg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+      <div className="bg-muted/95 relative hidden lg:block">
+        <MagnetLines
+          rows={10}
+          columns={12}
+          containerSize=" 100%"
+          lineColor="#efefef"
+          lineWidth="3px"
+          lineHeight="60px"
+          baseAngle={-10}
+          style={{ margin: "2rem auto" }}
         />
       </div>
-      <div className="flex flex-col gap-4 p-6 md:p-10">
+
+      <div className="flex   flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <Link href="/" className="flex items-center gap-2 font-medium">
             <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
