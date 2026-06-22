@@ -1,7 +1,7 @@
 'use client';
 import * as z from 'zod';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from '@/lib/zod-resolver';
 import { Button } from '@/components/ui/button';
 import { Controller, useForm } from 'react-hook-form';
 import { Password } from '@/components/password';
