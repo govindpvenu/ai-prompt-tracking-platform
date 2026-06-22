@@ -1,3 +1,4 @@
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -35,7 +36,7 @@ export function GoogleAuth({ lastMethod }: { lastMethod: string | null }) {
       onClick={signInWithGoogle}
       disabled={pendingGoogle}
       variant="outline"
-      className="relative w-full"
+      className="relative w-full h-full min-h-8 "
     >
       {lastMethod === "google" && (
         <Badge className="absolute top-0 right-0 z-10 -mt-2 -mr-2 leading-none">

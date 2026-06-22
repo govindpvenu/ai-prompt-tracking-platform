@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { HeroHeader } from "./header";
 import { Sparkle } from "lucide-react";
+import { GoogleAuth } from "@/app/(auth)/_components/GoogleAuth";
 
 export default function HeroSection() {
   return (
@@ -22,30 +23,31 @@ export default function HeroSection() {
                     aria-hidden
                     className="border-background bg-linear-to-b dark:inset-shadow-2xs to-foreground from-primary relative flex size-5 items-center justify-center rounded border shadow-md shadow-black/20 ring-1 ring-black/10"
                   >
-                    <div className="absolute inset-x-0 inset-y-1.5 border-y border-dotted border-white/25"></div>
-                    <div className="absolute inset-x-1.5 inset-y-0 border-x border-dotted border-white/25"></div>
-                    <Sparkle className="size-3 fill-white stroke-white drop-shadow" />
+                    <Sparkle className="size-3 fill-primary stroke-accent drop-shadow" />
                   </div>
-                  <span className="font-medium">Introducing Prompt Tracker</span>
+                  <span className="font-medium">
+                    Introducing Prompt Tracker
+                  </span>
                 </Link>
                 <h1 className="mx-auto mt-8 max-w-3xl text-balance text-4xl font-bold tracking-tight sm:text-5xl">
                   Monitor AI Responses & Brand Mentions
                 </h1>
                 <p className="text-muted-foreground mx-auto my-6 max-w-xl text-balance text-xl">
-                  Track how models like Google Gemini and OpenAI respond to specific prompts. Monitor your brand mentions and citations across leading LLMs.
+                  Track how models like Google Gemini and OpenAI respond to
+                  specific prompts. Monitor your brand mentions and citations
+                  across leading LLMs.
                 </p>
 
                 <div className="flex items-center justify-center gap-3">
                   <Button asChild size="lg">
-                    <Link href="#link">
-                      <span className="text-nowrap">Start Tracking</span>
+                    <Link href="/sign-up">
+                      <span className="text-nowrap">Get Started</span>
                     </Link>
                   </Button>
-                  <Button asChild size="lg" variant="outline">
-                    <Link href="#link">
-                      <span className="text-nowrap">Watch Video</span>
-                    </Link>
-                  </Button>
+
+                  <div className="w-48  h-9 flex items-center  justify-center ">
+                    <GoogleAuth lastMethod={"email"} />
+                  </div>
                 </div>
               </div>
             </div>
