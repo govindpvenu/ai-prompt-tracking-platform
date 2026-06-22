@@ -18,11 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -133,15 +129,6 @@ export function HistoryClient() {
       </div>
 
       <Card>
-        <CardHeader className="border-b">
-          <CardTitle className="flex items-center gap-2">
-            <FilterIcon data-icon="inline-start" />
-            Filters
-          </CardTitle>
-          <CardDescription>
-            Filters apply to model result rows. Open a row to view the full run.
-          </CardDescription>
-        </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <FieldGroup className="gap-3">
@@ -347,7 +334,9 @@ function HistoryTable({
                 <td className="px-3 py-3 align-top">
                   <div className="flex flex-wrap gap-1.5">
                     <BooleanBadge
-                      active={run.results.some((result) => result.brandMentioned)}
+                      active={run.results.some(
+                        (result) => result.brandMentioned,
+                      )}
                       activeLabel="Mentioned"
                       inactiveLabel="No mention"
                     />

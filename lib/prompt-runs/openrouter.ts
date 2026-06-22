@@ -1,3 +1,6 @@
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { generateText, type LanguageModelUsage } from "ai";
+
 import type { UsageMetadata } from "@/types/promptRuns";
 
 type OpenRouterMessage = {
@@ -40,7 +43,7 @@ type OpenRouterChatResponse = {
 export type OpenRouterCompletion = {
   content: string;
   usage?: UsageMetadata;
-  raw: OpenRouterChatResponse;
+  raw: unknown;
 };
 
 export function assertFreeModel(modelId: string) {
@@ -65,6 +68,33 @@ export async function sendOpenRouterChat({
   }
 
   assertFreeModel(model);
+
+  if (!responseFormat) {
+    const openrouter = createOpenRouter({
+      apiKey,
+      appName: process.env.OPENROUTER_SITE_NAME ?? "Prompt Tracker",
+      appUrl:
+        process.env.OPENROUTER_SITE_URL ??
+        process.env.NEXT_PUBLIC_BASE_URL ??
+        "http://localhost:3000",
+    });
+    const result = await generateText({
+      maxOutputTokens: maxTokens,
+      messages,
+      model: openrouter.chat(model),
+      temperature,
+    });
+
+    if (!result.text.trim()) {
+      throw new Error("OpenRouter returned an empty response.");
+    }
+
+    return {
+      content: result.text,
+      raw: result.response,
+      usage: mapLanguageModelUsage(result.usage),
+    };
+  }
 
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
@@ -115,6 +145,15 @@ export async function sendOpenRouterChat({
         }
       : undefined,
     raw: completion,
+  };
+}
+
+function mapLanguageModelUsage(usage: LanguageModelUsage): UsageMetadata {
+  return {
+    completionTokens: usage.outputTokens,
+    promptTokens: usage.inputTokens,
+    raw: usage.raw ?? usage,
+    totalTokens: usage.totalTokens,
   };
 }
 

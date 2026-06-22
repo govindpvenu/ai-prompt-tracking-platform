@@ -2,6 +2,7 @@
 
 import type * as React from "react";
 
+import { MessageResponse } from "@/components/ai-elements/message";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -56,10 +57,9 @@ export function ModelResultCard({ result }: { result: PromptRunResult }) {
         ) : null}
 
         {result.rawResponse ? (
-          <HighlightedText
-            text={result.rawResponse}
-            highlights={result.mentionHighlights}
-          />
+          <MessageResponse className="text-sm leading-6">
+            {result.rawResponse}
+          </MessageResponse>
         ) : (
           <div className="flex min-h-40 items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
             No response captured.
