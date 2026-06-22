@@ -16,6 +16,7 @@ import { ConnectedAccounts } from "./ConnectedAccounts";
 import SecuritySettings from "./SecuritySettings";
 import ActiveSessions from "./ActiveSessions";
 import AccountInfo from "./AccountInfo";
+import { AppearanceSettings } from "./AppearanceSettings";
 import type { Session } from "@/lib/auth";
 
 const settingsSections = [
@@ -98,16 +99,7 @@ export function SettingsTabs({ user }: { user: Session["user"] }) {
       </TabsContent>
 
       <TabsContent value="appearance">
-        <Card>
-          <CardHeader>
-            <CardTitle>Appearance Preferences</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Appearance preferences will be implemented here.
-            </p>
-          </CardContent>
-        </Card>
+        <AppearanceSettings />
       </TabsContent>
     </Tabs>
   );
