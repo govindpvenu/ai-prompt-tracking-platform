@@ -1,5 +1,5 @@
-// This will the landing page. Do this only after completing the project
+import HeroSection from "@/components/hero-section";
 
 export default function Home() {
-  return <>Landing Page</>;
+  return <HeroSection />;
 }
