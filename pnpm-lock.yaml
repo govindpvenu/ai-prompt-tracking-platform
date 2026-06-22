@@ -35,6 +35,9 @@ importers:
       '@streamdown/mermaid':
         specifier: ^1.0.2
         version: 1.0.2(react@19.2.4)
+      '@types/d':
+        specifier: ^1.0.4
+        version: 1.0.4
       ai:
         specifier: ^6.0.208
         version: 6.0.208(zod@4.4.3)
@@ -50,6 +53,9 @@ importers:
       cmdk:
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      d3:
+        specifier: ^7.9.0
+        version: 7.9.0
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
@@ -2198,6 +2204,9 @@ packages:
 
   '@types/d3@7.4.3':
     resolution: {integrity: sha512-lZXZ9ckh5R8uiFVt8ogUNf+pIrK4EsWrx2Np75WvF/eTpJ0FMHNhjXk8CKEx/+gpHbNQyJWehbFaTvqmHWB3ww==}
+
+  '@types/d@1.0.4':
+    resolution: {integrity: sha512-hPjN2akiXVnP4rcpgmLV2jrkXl4GcYxehFIsgH6Z0JOv+28VCt1bbq3Nl+z2BYLGcoMayzah/2yDzynf0VVSGg==}
 
   '@types/debug@4.1.13':
     resolution: {integrity: sha512-KSVgmQmzMwPlmtljOomayoR89W4FynCAi3E8PPs7vmDVPe84hT+vGPKkJfThkmXs0x0jAaa9U8uW8bbfyS2fWw==}
@@ -7434,6 +7443,8 @@ snapshots:
       '@types/d3-timer': 3.0.2
       '@types/d3-transition': 3.0.9
       '@types/d3-zoom': 3.0.8
+
+  '@types/d@1.0.4': {}
 
   '@types/debug@4.1.13':
     dependencies:

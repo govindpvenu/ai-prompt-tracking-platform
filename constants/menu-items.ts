@@ -17,6 +17,11 @@ export const items = [
     icon: Astroid,
   },
   {
+    title: "History",
+    url: "/dashboard/history",
+    icon: History,
+  },
+  {
     title: "Batch Prompts",
     url: "/dashboard/batch-prompts",
     icon: FileStack,
@@ -25,10 +30,5 @@ export const items = [
     title: "Schedule",
     url: "/dashboard/schedule",
     icon: CalendarSync,
-  },
-  {
-    title: "History",
-    url: "/dashboard/history",
-    icon: History,
   },
 ];
