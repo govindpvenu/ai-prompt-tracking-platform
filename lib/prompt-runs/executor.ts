@@ -356,7 +356,7 @@ function getEvaluatorModel(modelSpecs: ModelSpec[]) {
   const evaluatorModel =
     process.env.OPENROUTER_EVALUATOR_MODEL?.trim() ||
     modelSpecs.find((modelSpec) => modelSpec.provider === "openai")?.modelId ||
-    "openai/gpt-oss-20b:free";
+    "google/gemma-4-31b-it:free";
 
   assertFreeModel(evaluatorModel);
 
