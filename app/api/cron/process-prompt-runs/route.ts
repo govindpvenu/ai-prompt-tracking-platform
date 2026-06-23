@@ -1,4 +1,5 @@
 import { processQueuedPromptRuns } from "@/lib/prompt-runs/executor";
+import { processDuePromptSchedules } from "@/lib/prompt-schedules/executor";
 
 export const runtime = "nodejs";
 
@@ -11,9 +12,13 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const limit = Number(url.searchParams.get("limit") ?? 3);
+  const scheduleLimit = Number(url.searchParams.get("scheduleLimit") ?? 5);
+  const scheduled = await processDuePromptSchedules(scheduleLimit);
   const processed = await processQueuedPromptRuns(limit);
 
   return Response.json({
+    scheduled,
+    scheduledCount: scheduled.length,
     processed,
     count: processed.length,
   });

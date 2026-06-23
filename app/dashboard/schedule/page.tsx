@@ -1,8 +1,11 @@
-import WorkInProgress from "@/components/work-in-progress";
 import { requireAuth } from "@/helper/require-auth";
+import { listPromptSchedules } from "@/lib/prompt-schedules/repository";
 
-export default async function HistoryPage() {
-  await requireAuth();
+import { ScheduleClient } from "./_components/ScheduleClient";
 
-  return <WorkInProgress />;
+export default async function SchedulePage() {
+  const session = await requireAuth();
+  const schedules = await listPromptSchedules(session.user.id);
+
+  return <ScheduleClient initialSchedules={schedules} />;
 }

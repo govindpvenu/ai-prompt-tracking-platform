@@ -30,6 +30,16 @@ export const promptRunStatusEnum = pgEnum("prompt_run_status", [
   "failed",
 ]);
 
+export const promptScheduleCadenceEnum = pgEnum("prompt_schedule_cadence", [
+  "daily",
+  "weekly",
+]);
+
+export const promptScheduleStatusEnum = pgEnum("prompt_schedule_status", [
+  "active",
+  "paused",
+]);
+
 export const sentimentEnum = pgEnum("mention_sentiment", [
   "positive",
   "neutral",
@@ -50,8 +60,8 @@ export type UsageMetadata = {
   raw?: unknown;
 };
 
-export const promptRuns = pgTable(
-  "prompt_runs",
+export const promptSchedules = pgTable(
+  "prompt_schedules",
   {
     id: text("id").primaryKey(),
     userId: text("user_id")
@@ -60,7 +70,38 @@ export const promptRuns = pgTable(
     prompt: text("prompt").notNull(),
     brand: text("brand").notNull(),
     brandDomain: text("brand_domain"),
+    cadence: promptScheduleCadenceEnum("cadence").notNull(),
+    status: promptScheduleStatusEnum("status").default("active").notNull(),
+    nextRunAt: timestamp("next_run_at").notNull(),
+    lastRunAt: timestamp("last_run_at"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("prompt_schedules_user_status_next_idx").on(
+      table.userId,
+      table.status,
+      table.nextRunAt,
+    ),
+    index("prompt_schedules_user_created_idx").on(table.userId, table.createdAt),
+  ],
+);
+
+export const promptRuns = pgTable(
+  "prompt_runs",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    scheduleId: text("schedule_id").references(() => promptSchedules.id, {
+      onDelete: "set null",
+    }),
+    prompt: text("prompt").notNull(),
+    brand: text("brand").notNull(),
+    brandDomain: text("brand_domain"),
     status: promptRunStatusEnum("status").default("completed").notNull(),
+    scheduledAt: timestamp("scheduled_at"),
     startedAt: timestamp("started_at"),
     completedAt: timestamp("completed_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -68,6 +109,10 @@ export const promptRuns = pgTable(
   (table) => [
     index("prompt_runs_user_created_idx").on(table.userId, table.createdAt),
     index("prompt_runs_brand_idx").on(table.brand),
+    index("prompt_runs_schedule_created_idx").on(
+      table.scheduleId,
+      table.createdAt,
+    ),
   ],
 );
 
@@ -114,8 +159,23 @@ export const promptRunsRelations = relations(promptRuns, ({ one, many }) => ({
     fields: [promptRuns.userId],
     references: [user.id],
   }),
+  schedule: one(promptSchedules, {
+    fields: [promptRuns.scheduleId],
+    references: [promptSchedules.id],
+  }),
   results: many(promptRunResults),
 }));
+
+export const promptSchedulesRelations = relations(
+  promptSchedules,
+  ({ one, many }) => ({
+    user: one(user, {
+      fields: [promptSchedules.userId],
+      references: [user.id],
+    }),
+    runs: many(promptRuns),
+  }),
+);
 
 export const promptRunResultsRelations = relations(
   promptRunResults,

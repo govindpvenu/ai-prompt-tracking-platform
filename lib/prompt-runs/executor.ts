@@ -22,14 +22,18 @@ type ModelSpec = {
 
 export async function createQueuedPromptRun({
   userId,
+  scheduleId,
   prompt,
   brand,
   brandDomain,
+  scheduledAt,
 }: {
   userId: string;
+  scheduleId?: string | null;
   prompt: string;
   brand: string;
   brandDomain: string | null | undefined;
+  scheduledAt?: Date | null;
 }) {
   const runId = randomUUID();
   const normalizedBrandDomain = normalizeDomain(brandDomain);
@@ -40,10 +44,12 @@ export async function createQueuedPromptRun({
     .values({
       id: runId,
       userId,
+      scheduleId,
       prompt,
       brand,
       brandDomain: normalizedBrandDomain,
       status: "pending",
+      scheduledAt,
     })
     .returning();
 

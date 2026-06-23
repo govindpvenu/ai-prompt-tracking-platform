@@ -46,10 +46,12 @@ export type PromptRunResult = {
 
 export type PromptRun = {
   id: string;
+  scheduleId: string | null;
   prompt: string;
   brand: string;
   brandDomain: string | null;
   status: PromptRunStatus;
+  scheduledAt: string | null;
   startedAt: string | null;
   completedAt: string | null;
   createdAt: string;

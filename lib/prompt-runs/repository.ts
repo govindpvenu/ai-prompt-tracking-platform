@@ -33,10 +33,12 @@ export function serializePromptRun(
 ): PromptRun {
   return {
     id: run.id,
+    scheduleId: run.scheduleId,
     prompt: run.prompt,
     brand: run.brand,
     brandDomain: run.brandDomain,
     status: run.status,
+    scheduledAt: run.scheduledAt?.toISOString() ?? null,
     startedAt: run.startedAt?.toISOString() ?? null,
     completedAt: run.completedAt?.toISOString() ?? null,
     createdAt: run.createdAt.toISOString(),
