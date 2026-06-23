@@ -51,7 +51,7 @@ export function SignUpForm() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    mode: "onBlur",
+    mode: "onSubmit",
     defaultValues: {
       first_name: process.env.NODE_ENV === "production" ? "" : "test",
       last_name: process.env.NODE_ENV === "production" ? "" : "user",

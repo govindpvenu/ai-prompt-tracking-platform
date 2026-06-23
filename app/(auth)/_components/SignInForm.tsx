@@ -43,7 +43,7 @@ export function SignInForm() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    mode: "onBlur",
+    mode: "onSubmit",
     defaultValues: {
       email: process.env.NODE_ENV === "production" ? "" : "test@test.com",
       password: process.env.NODE_ENV === "production" ? "" : "12345678",

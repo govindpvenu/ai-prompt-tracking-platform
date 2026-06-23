@@ -1,15 +1,8 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import {
-  AlertTriangle,
-  Fingerprint,
-  Palette,
-  Shield,
-  User,
-} from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Fingerprint, Palette, Shield, User } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileDetails from "./ProfileDetails";
 import { ConnectedAccounts } from "./ConnectedAccounts";
@@ -37,25 +30,24 @@ function getActiveSection(section: string | null): SettingsSection {
 }
 
 export function SettingsTabs({ user }: { user: Session["user"] }) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const activeSection = getActiveSection(searchParams.get("section"));
 
   function handleSectionChange(section: string) {
-    const params = new URLSearchParams(searchParams);
+    const nextSection = getActiveSection(section);
+    const params = new URLSearchParams(window.location.search);
 
-    if (section === "profile") {
+    if (nextSection === "profile") {
       params.delete("section");
     } else {
-      params.set("section", section);
+      params.set("section", nextSection);
     }
 
     const query = params.toString();
-    router.replace(
-      query ? `/dashboard/settings?${query}` : "/dashboard/settings",
-      {
-        scroll: false,
-      },
+    window.history.replaceState(
+      null,
+      "",
+      query ? `${window.location.pathname}?${query}` : window.location.pathname,
     );
   }
 
