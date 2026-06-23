@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 const authRoutes = [
   "/sign-in",
   "/sign-up",
-  "/forgot-passwcord",
+  "/forgot-password",
   "/reset-password",
   "/",
 ];

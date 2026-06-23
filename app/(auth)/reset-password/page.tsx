@@ -2,7 +2,7 @@ import { GalleryVerticalEnd } from "lucide-react";
 import { ResetPasswordForm } from "../_components/ResetPassword";
 import Link from "next/link";
 
-export default async function ResetPassword({
+export default async function ResetPasswordPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;

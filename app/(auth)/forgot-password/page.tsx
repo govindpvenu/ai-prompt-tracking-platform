@@ -2,7 +2,7 @@ import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import ForgotPasswordForm from "../_components/ForgotPasswordForm";
 
-export default async function ForgotPassword({
+export default async function ForgotPasswordPage({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
