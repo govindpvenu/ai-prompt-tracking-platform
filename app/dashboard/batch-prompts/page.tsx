@@ -1,9 +1,9 @@
-import WorkInProgress from "@/components/work-in-progress";
 import { requireAuth } from "@/helper/require-auth";
-import { redirect } from "next/navigation";
 
-export default async function SalaryOverviewPage() {
+import { BatchPromptsClient } from "./_components/BatchPromptsClient";
+
+export default async function BatchPromptsPage() {
   await requireAuth();
 
-  return <WorkInProgress />;
+  return <BatchPromptsClient />;
 }

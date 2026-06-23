@@ -1,6 +1,12 @@
 export type ModelProvider = "openai" | "gemini";
 
-export type PromptRunResultStatus = "success" | "error";
+export type PromptRunStatus = "pending" | "running" | "completed" | "failed";
+
+export type PromptRunResultStatus =
+  | "pending"
+  | "running"
+  | "success"
+  | "error";
 
 export type MentionSentiment =
   | "positive"
@@ -43,6 +49,9 @@ export type PromptRun = {
   prompt: string;
   brand: string;
   brandDomain: string | null;
+  status: PromptRunStatus;
+  startedAt: string | null;
+  completedAt: string | null;
   createdAt: string;
   results: PromptRunResult[];
 };

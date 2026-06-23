@@ -17,8 +17,17 @@ export const modelProviderEnum = pgEnum("model_provider", [
 ]);
 
 export const promptRunResultStatusEnum = pgEnum("prompt_run_result_status", [
+  "pending",
+  "running",
   "success",
   "error",
+]);
+
+export const promptRunStatusEnum = pgEnum("prompt_run_status", [
+  "pending",
+  "running",
+  "completed",
+  "failed",
 ]);
 
 export const sentimentEnum = pgEnum("mention_sentiment", [
@@ -51,6 +60,9 @@ export const promptRuns = pgTable(
     prompt: text("prompt").notNull(),
     brand: text("brand").notNull(),
     brandDomain: text("brand_domain"),
+    status: promptRunStatusEnum("status").default("completed").notNull(),
+    startedAt: timestamp("started_at"),
+    completedAt: timestamp("completed_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => [

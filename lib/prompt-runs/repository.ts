@@ -36,6 +36,9 @@ export function serializePromptRun(
     prompt: run.prompt,
     brand: run.brand,
     brandDomain: run.brandDomain,
+    status: run.status,
+    startedAt: run.startedAt?.toISOString() ?? null,
+    completedAt: run.completedAt?.toISOString() ?? null,
     createdAt: run.createdAt.toISOString(),
     results: results
       .map(serializePromptRunResult)
