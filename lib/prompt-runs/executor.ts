@@ -289,7 +289,10 @@ async function resetStaleRunningRuns() {
     .select({ id: promptRuns.id })
     .from(promptRuns)
     .where(
-      and(eq(promptRuns.status, "running"), lt(promptRuns.startedAt, staleBefore)),
+      and(
+        eq(promptRuns.status, "running"),
+        lt(promptRuns.startedAt, staleBefore),
+      ),
     );
   const staleRunIds = staleRuns.map((run) => run.id);
 
@@ -343,7 +346,7 @@ function getGeminiModel() {
     configured === "google/gemini-exp-1114:free" ||
     configured === "google/gemini-2.5-flash-lite"
   ) {
-    return "google/gemma-4-26b-a4b-it:free";
+    return "openrouter/free";
   }
 
   return configured;
