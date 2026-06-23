@@ -1,4 +1,4 @@
-import { GalleryVerticalEnd } from "lucide-react";
+import { BotMessageSquare, GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 import ForgotPasswordForm from "../_components/ForgotPasswordForm";
 
@@ -13,8 +13,9 @@ export default async function ForgotPasswordPage({
     <div className="flex min-h-svh flex-col gap-4 p-6 md:p-10">
       <div className="flex justify-center gap-2 md:justify-start">
         <Link href="/" className="flex items-center gap-2 font-medium">
-          <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <GalleryVerticalEnd className="size-4" />
+          <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
+            {/* <GalleryVerticalEnd className="size-4" /> */}
+            <BotMessageSquare className="!size-6" strokeWidth="1.5" />
           </div>
           AI Prompt Tracker
         </Link>
