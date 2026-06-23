@@ -265,12 +265,9 @@ async function evaluateWithModel({
       model: evaluatorModel,
       temperature: 0,
       maxTokens: 350,
+      system:
+        "You classify brand mentions in LLM responses. Return only JSON matching the provided schema.",
       messages: [
-        {
-          role: "system",
-          content:
-            "You classify brand mentions in LLM responses. Return only JSON matching the provided schema.",
-        },
         {
           role: "user",
           content: [

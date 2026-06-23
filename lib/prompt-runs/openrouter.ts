@@ -4,7 +4,7 @@ import { generateText, type LanguageModelUsage } from "ai";
 import type { UsageMetadata } from "@/types/promptRuns";
 
 type OpenRouterMessage = {
-  role: "system" | "user" | "assistant";
+  role: "user" | "assistant";
   content: string;
 };
 
@@ -19,6 +19,7 @@ type JsonSchemaResponseFormat = {
 
 type OpenRouterChatRequest = {
   model: string;
+  system?: string;
   messages: OpenRouterMessage[];
   temperature?: number;
   maxTokens?: number;
@@ -56,6 +57,7 @@ export function assertFreeModel(modelId: string) {
 
 export async function sendOpenRouterChat({
   model,
+  system,
   messages,
   temperature = 0.2,
   maxTokens = 900,
@@ -82,6 +84,7 @@ export async function sendOpenRouterChat({
       maxOutputTokens: maxTokens,
       messages,
       model: openrouter.chat(model),
+      system,
       temperature,
     });
 
@@ -110,7 +113,9 @@ export async function sendOpenRouterChat({
     },
     body: JSON.stringify({
       model,
-      messages,
+      messages: system
+        ? [{ role: "system", content: system }, ...messages]
+        : messages,
       temperature,
       max_tokens: maxTokens,
       ...(responseFormat ? { response_format: responseFormat } : {}),

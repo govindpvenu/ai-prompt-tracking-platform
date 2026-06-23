@@ -217,12 +217,9 @@ async function executeModelPrompt({
       model: modelSpec.modelId,
       temperature: 0.2,
       maxTokens: 1100,
+      system:
+        "You are a research assistant. Answer the user prompt directly. If you rely on a source and know the URL, include it. Do not fabricate citations.",
       messages: [
-        {
-          role: "system",
-          content:
-            "You are a research assistant. Answer the user prompt directly. If you rely on a source and know the URL, include it. Do not fabricate citations.",
-        },
         {
           role: "user",
           content: prompt,
