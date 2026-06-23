@@ -27,7 +27,7 @@ export async function Profile() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  console.log("session:", session);
+  // console.log("session:", session);
 
   if (!session) {
     return null;

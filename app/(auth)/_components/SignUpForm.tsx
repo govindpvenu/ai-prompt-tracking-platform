@@ -53,11 +53,11 @@ export function SignUpForm() {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      first_name: "test",
-      last_name: "user",
-      email: "test@test.com",
-      password: "12345678",
-      confirm_password: "12345678",
+      first_name: process.env.NODE_ENV === "production" ? "" : "test",
+      last_name: process.env.NODE_ENV === "production" ? "" : "user",
+      email: process.env.NODE_ENV === "production" ? "" : "test@test.com",
+      password: process.env.NODE_ENV === "production" ? "" : "12345678",
+      confirm_password: process.env.NODE_ENV === "production" ? "" : "12345678",
     },
   });
 

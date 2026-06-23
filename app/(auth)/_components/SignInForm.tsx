@@ -45,8 +45,8 @@ export function SignInForm() {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      email: "test@test.com",
-      password: "12345678",
+      email: process.env.NODE_ENV === "production" ? "" : "test@test.com",
+      password: process.env.NODE_ENV === "production" ? "" : "12345678",
       remember_me: true,
     },
   });
