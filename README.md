@@ -1,8 +1,15 @@
-# AI Prompt Tracking Platform
+# GetCited
 
-A small Next.js app for checking how AI models talk about a brand.
+An open-source, BYOK-first platform for checking how AI models talk about your
+brand.
 
-You enter a prompt, brand name, and optional website. The app sends the prompt through OpenRouter, saves each model response, and shows whether the brand was mentioned, cited, and how the response came across.
+You enter a prompt, brand name, and optional website. GetCited sends the prompt
+through OpenRouter, saves each model response, and shows whether the brand was
+mentioned, cited, and how the response came across.
+
+The project is designed to be inspected, self-hosted, and adapted. Teams can run
+it with a shared environment OpenRouter key or let each user bring their own
+OpenRouter key so model usage, billing, and limits stay under their control.
 
 ## What It Does
 
@@ -12,6 +19,8 @@ You enter a prompt, brand name, and optional website. The app sends the prompt t
 - Supports batch runs for up to five brands at a time.
 - Supports daily or weekly scheduled prompts for ongoing tracking.
 - Shows simple dashboard stats for runs, responses, mentions, and citations.
+- Lets users bring their own OpenRouter API key, with saved keys encrypted before storage.
+- Keeps the code open so the workflow can be self-hosted, audited, and extended.
 
 ## Stack
 
@@ -58,9 +67,11 @@ SMTP_FROM=Your Name <yourname@gmail.com>
 OPENROUTER_API_KEY=sk-or-v1-...
 OPENROUTER_SITE_URL=http://localhost:3000
 OPENROUTER_SITE_NAME=Prompt Tracker
+BYOK_ENCRYPTION_KEY=replace-with-a-random-secret
 
 OPENROUTER_OPENAI_MODEL=openai/gpt-oss-20b:free
 OPENROUTER_GEMINI_MODEL=google/gemma-4-26b-a4b-it:free
+OPENROUTER_EVALUATOR_MODEL=openai/gpt-oss-20b:free
 ```
 
 Run migrations and start the app:
@@ -95,10 +106,12 @@ pnpm db:studio    # open Drizzle Studio
 
 ## Decisions
 
+- **Open source:** The project is meant to be self-hostable and easy to inspect, so teams can see how prompts, model calls, and scoring work.
+- **BYOK-first model access:** Users can provide their own OpenRouter key from the dashboard, while deployments can still provide an environment fallback key.
 - **OpenRouter:** One API makes it easier to try different models without rewriting the model layer.
 - **Drizzle and PostgreSQL:** The app is mostly saved research data, so a relational setup fits well.
 - **Better Auth:** Auth is handled with Google sign-in, email flows, sessions, and account pages.
-- **Server-side model calls:** API keys and analysis logic stay on the server.
+- **Server-side model calls:** API keys and analysis logic stay on the server, and user-provided keys are encrypted before being saved.
 
 ## Known Trade-offs
 
@@ -107,7 +120,3 @@ pnpm db:studio    # open Drizzle Studio
 - **Provider labels are not perfect:** The UI compares provider-labelled paths, but a free fallback can mean the exact model is from a related family.
 - **Analysis quality depends on the evaluator:** Mention, citation, and sentiment checks are only as good as the configured evaluator model.
 - **External services are required:** The full app needs PostgreSQL, OpenRouter, OAuth credentials, and SMTP.
-
-## To Be Implemented
-
-- **BYOK:** Let users bring their own OpenRouter key. I decided to add this because the hosted app should not have to carry everyone’s model usage cost, and users who already have keys should be able to control their own limits and billing.

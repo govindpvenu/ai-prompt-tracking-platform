@@ -1,9 +1,10 @@
+import { Icons } from "@/constants/icons";
 import {
   BellRing,
   BookOpenCheck,
   Bot,
-  Fingerprint,
   Gauge,
+  KeyRound,
   SearchCheck,
 } from "lucide-react";
 
@@ -15,10 +16,10 @@ const features = [
       "Track the exact prompts that matter to your brand and compare how answers change over time.",
   },
   {
-    icon: Bot,
-    title: "Model comparison",
+    icon: KeyRound,
+    title: "Bring your own keys",
     description:
-      "Run the same research across configurable OpenRouter models and your own provider keys.",
+      "Connect your own OpenRouter key and keep model access under your control instead of a shared vendor account.",
   },
   {
     icon: BookOpenCheck,
@@ -32,17 +33,18 @@ const features = [
     description:
       "Automate recurring prompt runs so visibility changes are caught before they become surprises.",
   },
+
   {
-    icon: Gauge,
-    title: "Batch research",
+    icon: Bot,
+    title: "Model comparison",
     description:
-      "Test prompt groups at once and turn messy LLM output into structured visibility signals.",
+      "Run the same research across configurable AI models and compare where answers differ.",
   },
   {
-    icon: Fingerprint,
-    title: "Private by design",
+    icon: Icons.github,
+    title: "Open source",
     description:
-      "Use BYOK workflows and account controls built for teams that need clean, auditable AI research.",
+      "Inspect the code, self-host the platform, and adapt the workflow to match your team's research process.",
   },
 ];
 
@@ -55,14 +57,18 @@ export default function Features() {
             Know where your brand stands inside AI answers
           </h2>
           <p className="text-muted-foreground text-balance">
-            Prompt Tracker gives marketing, product, and SEO teams a repeatable
-            way to measure LLM visibility, citations, and response quality.
+            GetCited gives marketing, product, and SEO teams an open-source,
+            BYOK-first way to measure LLM visibility, citations, and response
+            quality.
           </p>
         </div>
 
         <div className="relative mx-auto grid max-w-4xl divide-y overflow-hidden border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-3 lg:[&>*:nth-child(n+4)]:border-t">
           {features.map((feature) => (
-            <div key={feature.title} className="flex flex-col gap-3 p-8 md:p-10">
+            <div
+              key={feature.title}
+              className="flex flex-col gap-3 p-8 md:p-10"
+            >
               <div className="flex items-center gap-2">
                 <feature.icon className="size-4" aria-hidden />
                 <h3 className="text-sm font-medium">{feature.title}</h3>

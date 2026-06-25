@@ -7,10 +7,10 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./layout/ThemeToggle";
 
-const menuItems = [
-  { name: "Features", href: "#features" },
-  { name: "Workflow", href: "#workflow" },
-];
+// const menuItems = [
+//   { name: "Features", href: "#features" },
+//   { name: "Workflow", href: "#workflow" },
+// ];
 
 export const HeroHeader = () => {
   const [menuState, setMenuState] = React.useState(false);
@@ -47,7 +47,7 @@ export const HeroHeader = () => {
                 className="flex items-center gap-2"
               >
                 <LogoIcon />
-                <span className="font-medium">Prompt Tracker</span>
+                <span className="font-medium">GetCited</span>
               </Link>
 
               <button
@@ -58,7 +58,7 @@ export const HeroHeader = () => {
                 <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
                 <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
               </button>
-
+              {/* 
               <div className="m-auto hidden size-fit lg:block">
                 <ul className="flex gap-1">
                   {menuItems.map((item) => (
@@ -71,11 +71,11 @@ export const HeroHeader = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </div>
 
             <div className="bg-background in-data-[state=active]:flex mb-6 hidden w-full flex-col flex-wrap items-center justify-end gap-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:flex-row lg:gap-6 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none">
-              <div className="lg:hidden">
+              {/* <div className="lg:hidden">
                 <ul className="flex flex-col gap-6 text-base">
                   {menuItems.map((item) => (
                     <li key={item.name}>
@@ -88,7 +88,7 @@ export const HeroHeader = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               <div className="flex w-full flex-col items-center justify-center gap-3 sm:flex-row md:w-fit">
                 <Button
                   asChild

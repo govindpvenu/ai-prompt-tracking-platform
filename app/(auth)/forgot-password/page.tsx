@@ -17,7 +17,7 @@ export default async function ForgotPasswordPage({
             {/* <GalleryVerticalEnd className="size-4" /> */}
             <BotMessageSquare className="!size-6" strokeWidth="1.5" />
           </div>
-          AI Prompt Tracker
+          GetCited
         </Link>
       </div>
       <div className="flex flex-1 items-center justify-center">

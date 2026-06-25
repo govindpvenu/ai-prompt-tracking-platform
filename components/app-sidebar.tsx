@@ -45,13 +45,13 @@ export function AppSidebar() {
             <SidebarMenuButton
               asChild
               size="lg"
-              tooltip="Prompt Tracker"
+              tooltip="GetCited"
               className="h-12 gap-3 px-2 group-data-[collapsible=icon]:justify-center"
             >
               <Link href="/dashboard">
                 <BotMessageSquare className="!size-6" strokeWidth="1.5" />
                 <span className="text-xl font-bold group-data-[collapsible=icon]:hidden">
-                  Prompt Tracker
+                  GetCited
                 </span>
               </Link>
             </SidebarMenuButton>

@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Prompt Tracker | AI Answer Visibility Monitoring",
+  title: "GetCited | AI Answer Visibility Monitoring",
   description:
     "Monitor how AI models respond to prompts, mention your brand, cite sources, and shift answers over time.",
 };
