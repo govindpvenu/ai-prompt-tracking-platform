@@ -47,6 +47,26 @@ export const sentimentEnum = pgEnum("mention_sentiment", [
   "unknown",
 ]);
 
+export const userOpenRouterSettings = pgTable(
+  "user_openrouter_settings",
+  {
+    userId: text("user_id")
+      .primaryKey()
+      .references(() => user.id, { onDelete: "cascade" }),
+    encryptedApiKey: text("encrypted_api_key"),
+    openaiModel: text("openai_model")
+      .default("openai/gpt-oss-20b:free")
+      .notNull(),
+    geminiModel: text("gemini_model")
+      .default("google/gemma-4-26b-a4b-it:free")
+      .notNull(),
+    evaluatorModel: text("evaluator_model"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [index("user_openrouter_settings_updated_idx").on(table.updatedAt)],
+);
+
 export type HighlightRange = {
   start: number;
   end: number;

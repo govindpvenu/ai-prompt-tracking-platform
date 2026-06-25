@@ -302,7 +302,7 @@ export function BooleanBadge({
 }
 
 export function formatModelProvider(provider: ModelProvider) {
-  return provider === "openai" ? "OpenAI" : "Gemini";
+  return provider === "openai" ? "Primary" : "Comparison";
 }
 
 export function formatDateTime(value: string) {

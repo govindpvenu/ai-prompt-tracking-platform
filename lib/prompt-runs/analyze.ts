@@ -55,11 +55,13 @@ const negativeTerms = new Set([
 ]);
 
 export async function analyzeModelResponse({
+  apiKey,
   response,
   brand,
   brandDomain,
   evaluatorModel,
 }: {
+  apiKey?: string;
   response: string;
   brand: string;
   brandDomain: string | null;
@@ -67,6 +69,7 @@ export async function analyzeModelResponse({
 }): Promise<TrackingAnalysis> {
   const deterministic = buildDeterministicAnalysis(response, brand, brandDomain);
   const evaluator = await evaluateWithModel({
+    apiKey,
     response,
     brand,
     brandDomain,
@@ -250,11 +253,13 @@ function inferSentiment(
 }
 
 async function evaluateWithModel({
+  apiKey,
   response,
   brand,
   brandDomain,
   evaluatorModel,
 }: {
+  apiKey?: string;
   response: string;
   brand: string;
   brandDomain: string | null;
@@ -262,6 +267,7 @@ async function evaluateWithModel({
 }): Promise<EvaluatorAnalysis | null> {
   try {
     const completion = await sendOpenRouterChat({
+      apiKey,
       model: evaluatorModel,
       temperature: 0,
       maxTokens: 350,

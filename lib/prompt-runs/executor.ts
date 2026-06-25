@@ -4,14 +4,12 @@ import { and, asc, eq, inArray, lt } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
 import { promptRunResults, promptRuns } from "@/db/schemas";
+import { getOpenRouterRuntimeSettings } from "@/lib/byok/openrouter-settings";
 import {
   analyzeModelResponse,
   normalizeDomain,
 } from "@/lib/prompt-runs/analyze";
-import {
-  assertFreeModel,
-  sendOpenRouterChat,
-} from "@/lib/prompt-runs/openrouter";
+import { sendOpenRouterChat } from "@/lib/prompt-runs/openrouter";
 import { serializePromptRun } from "@/lib/prompt-runs/repository";
 import type { ModelProvider } from "@/types/promptRuns";
 
@@ -37,7 +35,7 @@ export async function createQueuedPromptRun({
 }) {
   const runId = randomUUID();
   const normalizedBrandDomain = normalizeDomain(brandDomain);
-  const modelSpecs = getModelSpecs();
+  const { modelSpecs } = await getOpenRouterRuntimeSettings(userId);
 
   const [run] = await db
     .insert(promptRuns)
@@ -145,8 +143,8 @@ export async function executePromptRun(runId: string) {
     throw new Error("Prompt run not found.");
   }
 
-  const modelSpecs = getModelSpecs();
-  const evaluatorModel = getEvaluatorModel(modelSpecs);
+  const { apiKey, modelSpecs, evaluatorModel } =
+    await getOpenRouterRuntimeSettings(run.userId);
 
   await db
     .update(promptRuns)
@@ -165,6 +163,7 @@ export async function executePromptRun(runId: string) {
         prompt: run.prompt,
         brand: run.brand,
         brandDomain: run.brandDomain,
+        apiKey,
         evaluatorModel,
       }),
     ),
@@ -195,6 +194,7 @@ async function executeModelPrompt({
   prompt,
   brand,
   brandDomain,
+  apiKey,
   evaluatorModel,
 }: {
   modelSpec: ModelSpec;
@@ -203,12 +203,14 @@ async function executeModelPrompt({
   prompt: string;
   brand: string;
   brandDomain: string | null;
+  apiKey?: string;
   evaluatorModel: string;
 }) {
   await db
     .update(promptRunResults)
     .set({
       status: "running",
+      modelId: modelSpec.modelId,
       errorMessage: null,
     })
     .where(
@@ -220,6 +222,7 @@ async function executeModelPrompt({
 
   try {
     const completion = await sendOpenRouterChat({
+      apiKey,
       model: modelSpec.modelId,
       temperature: 0.2,
       maxTokens: 1100,
@@ -233,6 +236,7 @@ async function executeModelPrompt({
       ],
     });
     const analysis = await analyzeModelResponse({
+      apiKey,
       response: completion.content,
       brand,
       brandDomain,
@@ -315,52 +319,6 @@ async function resetStaleRunningRuns() {
       errorMessage: null,
     })
     .where(inArray(promptRunResults.runId, staleRunIds));
-}
-
-function getModelSpecs(): ModelSpec[] {
-  const modelSpecs: ModelSpec[] = [
-    {
-      provider: "openai",
-      modelId:
-        process.env.OPENROUTER_OPENAI_MODEL?.trim() ||
-        "openai/gpt-oss-20b:free",
-    },
-    {
-      provider: "gemini",
-      modelId: getGeminiModel(),
-    },
-  ];
-
-  for (const modelSpec of modelSpecs) {
-    assertFreeModel(modelSpec.modelId);
-  }
-
-  return modelSpecs;
-}
-
-function getGeminiModel() {
-  const configured = process.env.OPENROUTER_GEMINI_MODEL?.trim();
-
-  if (
-    !configured ||
-    configured === "google/gemini-exp-1114:free" ||
-    configured === "google/gemini-2.5-flash-lite"
-  ) {
-    return "openrouter/free";
-  }
-
-  return configured;
-}
-
-function getEvaluatorModel(modelSpecs: ModelSpec[]) {
-  const evaluatorModel =
-    process.env.OPENROUTER_EVALUATOR_MODEL?.trim() ||
-    modelSpecs.find((modelSpec) => modelSpec.provider === "openai")?.modelId ||
-    "google/gemma-4-31b-it:free";
-
-  assertFreeModel(evaluatorModel);
-
-  return evaluatorModel;
 }
 
 function getErrorMessage(error: unknown) {

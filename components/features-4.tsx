@@ -18,7 +18,7 @@ const features = [
     icon: Bot,
     title: "Model comparison",
     description:
-      "Run the same research across OpenAI, Gemini, OpenRouter models, and your own provider keys.",
+      "Run the same research across configurable OpenRouter models and your own provider keys.",
   },
   {
     icon: BookOpenCheck,

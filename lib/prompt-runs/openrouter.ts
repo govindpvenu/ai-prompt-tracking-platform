@@ -18,6 +18,7 @@ type JsonSchemaResponseFormat = {
 };
 
 type OpenRouterChatRequest = {
+  apiKey?: string;
   model: string;
   system?: string;
   messages: OpenRouterMessage[];
@@ -47,15 +48,14 @@ export type OpenRouterCompletion = {
   raw: unknown;
 };
 
-export function assertFreeModel(modelId: string) {
-  if (!modelId.endsWith(":free")) {
-    throw new Error(
-      `Paid model blocked: ${modelId}. Only OpenRouter :free models are allowed.`,
-    );
+export function assertOpenRouterModel(modelId: string) {
+  if (!modelId || /\s/.test(modelId) || !modelId.includes("/")) {
+    throw new Error(`Invalid OpenRouter model id: ${modelId || "empty"}.`);
   }
 }
 
 export async function sendOpenRouterChat({
+  apiKey: requestApiKey,
   model,
   system,
   messages,
@@ -63,13 +63,16 @@ export async function sendOpenRouterChat({
   maxTokens = 900,
   responseFormat,
 }: OpenRouterChatRequest): Promise<OpenRouterCompletion> {
-  const apiKey = process.env.OPENROUTER_API_KEY ?? process.env.OPEN_ROUTER_API_KEY;
+  const apiKey =
+    requestApiKey ||
+    process.env.OPENROUTER_API_KEY ||
+    process.env.OPEN_ROUTER_API_KEY;
 
   if (!apiKey) {
     throw new Error("OpenRouter API key is not configured.");
   }
 
-  assertFreeModel(model);
+  assertOpenRouterModel(model);
 
   if (!responseFormat) {
     const openrouter = createOpenRouter({

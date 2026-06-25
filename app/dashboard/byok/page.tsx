@@ -1,8 +1,11 @@
-import WorkInProgress from "@/components/work-in-progress";
 import { requireAuth } from "@/helper/require-auth";
+import { getOpenRouterSettingsView } from "@/lib/byok/openrouter-settings";
+
+import { ByokClient } from "./_components/ByokClient";
 
 export default async function ByokPage() {
-  await requireAuth();
+  const session = await requireAuth();
+  const settings = await getOpenRouterSettingsView(session.user.id);
 
-  return <WorkInProgress />;
+  return <ByokClient initialSettings={settings} />;
 }

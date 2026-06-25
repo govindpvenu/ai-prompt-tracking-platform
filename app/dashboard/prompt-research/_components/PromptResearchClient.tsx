@@ -372,7 +372,7 @@ export function PromptResearchClient() {
                 <PromptInputTools>
                   <span className="flex items-center gap-1.5 px-2 text-primary text-xs">
                     <BotIcon data-icon="inline-start" />
-                    Runs OpenAI and Gemini in parallel
+                    Runs primary and comparison models in parallel
                   </span>
                 </PromptInputTools>
                 <div className="flex items-center gap-2">

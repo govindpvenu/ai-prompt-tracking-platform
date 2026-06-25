@@ -160,8 +160,8 @@ export function HistoryClient() {
                     value={filters.model}
                   >
                     <option value="all">All models</option>
-                    <option value="openai">OpenAI</option>
-                    <option value="gemini">Gemini</option>
+                    <option value="openai">Primary</option>
+                    <option value="gemini">Comparison</option>
                   </NativeSelect>
                 </Field>
                 <Field>
