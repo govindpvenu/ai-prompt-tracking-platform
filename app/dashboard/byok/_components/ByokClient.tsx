@@ -467,7 +467,6 @@ export function ByokClient({ initialSettings }: ByokClientProps) {
         {models.map((model) => (
           <option key={model.id} value={model.id}>
             {model.name}
-            {model.isFree ? " (free)" : ""}
           </option>
         ))}
       </datalist>
@@ -504,9 +503,7 @@ function ModelField({
         value={value}
       />
       <FieldDescription>
-        {model
-          ? `${model.name}${model.isFree ? " (free)" : ""}`
-          : "Enter any OpenRouter model id."}
+        {model ? `${model.name}` : "Enter any OpenRouter model id."}
       </FieldDescription>
     </Field>
   );
